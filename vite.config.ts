@@ -1,6 +1,7 @@
-import { cloudflare } from "@cloudflare/vite-plugin";
+
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import { nitro } from "nitro/vite";
 import viteReact from "@vitejs/plugin-react";
 import { defineConfig, loadEnv } from "vite";
 
@@ -12,17 +13,17 @@ export default defineConfig({
     port: 3000,
   },
   plugins: [
-    cloudflare({ viteEnvironment: { name: "ssr" } }),
     tanstackStart({
       prerender: {
         enabled: env.VITE_PRERENDER === "true",
         crawlLinks: false,
       },
     }),
+    nitro(),
     viteReact(),
     tailwindcss(),
   ],
   resolve: {
     tsconfigPaths: true,
-  }
+  },
 });
